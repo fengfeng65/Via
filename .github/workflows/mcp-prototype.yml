@@ -5,6 +5,7 @@ on:
     branches: [mcp-prototype]
   workflow_dispatch:
 
+# Diagnostic build: verify the Android bridge launches cleanly before reconnecting WebView hooks.
 jobs:
   build-android:
     runs-on: ubuntu-latest
