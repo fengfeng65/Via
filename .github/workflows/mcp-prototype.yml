@@ -16,8 +16,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v5
+      - name: Set up Gradle 9.5
+        run: |
+          curl -fsSL https://services.gradle.org/distributions/gradle-9.5-bin.zip -o /tmp/gradle.zip
+          unzip -q /tmp/gradle.zip -d /tmp
+          echo "/tmp/gradle-9.5/bin" >> "$GITHUB_PATH"
       - name: Build debug APK
         working-directory: mcp-prototype/android
         run: gradle --no-daemon :app:assembleDebug
