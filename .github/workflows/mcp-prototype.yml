@@ -6,12 +6,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  validate:
+  build-android:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Validate prototype files
-        run: |
-          test -f mcp-prototype/README.md
-          echo "MCP prototype workspace is present"
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v5
+      - name: Build debug APK
+        working-directory: mcp-prototype/android
+        run: gradle --no-daemon :app:assembleDebug
+      - name: Upload APK
+        uses: actions/upload-artifact@v6
+        with:
+          name: via-mcp-bridge-debug
+          path: mcp-prototype/android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
