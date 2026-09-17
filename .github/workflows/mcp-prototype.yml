@@ -1,0 +1,17 @@
+name: MCP Prototype CI
+
+on:
+  push:
+    branches: [mcp-prototype]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Validate prototype files
+        run: |
+          test -f mcp-prototype/README.md
+          echo "MCP prototype workspace is present"
